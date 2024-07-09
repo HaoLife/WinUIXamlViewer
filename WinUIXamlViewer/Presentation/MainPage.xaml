@@ -1,0 +1,63 @@
+﻿<Page
+  x:Class="WinUIXamlViewer.Presentation.MainPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+  xmlns:local="using:WinUIXamlViewer.Presentation"
+  xmlns:uen="using:Uno.Extensions.Navigation.UI"
+  xmlns:utu="using:Uno.Toolkit.UI"
+  xmlns:ui="using:CommunityToolkit.WinUI"
+  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+  NavigationCacheMode="Required">
+
+  <Grid utu:SafeArea.Insets="VisibleBounds">
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+
+
+    <Grid Padding="10,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10">
+        <Button Command="{Binding ReaderXamlCommand}" Content="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Foreground=Green, Glyph='&#xF5B0;'}" Style="{StaticResource TextBlockButtonStyle}" ToolTipService.ToolTip="运行解析xaml" />
+        <Button Command="{Binding OpenXamlFileCommand}" Content="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph='&#xE8E5;'}" Style="{StaticResource TextBlockButtonStyle}" ToolTipService.ToolTip="打开要解析的xaml文件" />
+      </StackPanel>
+
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10">
+        <Button Command="{Binding LoadAssemblyCommand}" Content="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph='&#xED0E;'}"  ToolTipService.ToolTip="扩展可支持的xaml语法程序集（如扩展组件）插件在当前程序的plugins目录下" Visibility="{Binding IsLoadAssembly}" />
+        <ToggleButton Command="{Binding ToggleTopCommand}" Content="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph='&#xE718;'}" IsChecked="{Binding IsTop}" ToolTipService.ToolTip="切换置顶按钮" />
+      </StackPanel>
+    </Grid>
+
+    <TabView
+      Grid.Row="1"
+      HorizontalAlignment="Stretch"
+      VerticalAlignment="Stretch"
+      HorizontalContentAlignment="Stretch"
+      VerticalContentAlignment="Stretch"
+      TabWidthMode="Equal"
+      TabItemsSource="{Binding WorkModels}"
+      SelectedItem="{Binding SelectedWorkModel,Mode=TwoWay}"
+      AddTabButtonCommand="{Binding AddItemCommand}">
+      <interactivity:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="TabCloseRequested">
+          <core:InvokeCommandAction Command="{Binding RemoveItemCommand}" />
+        </core:EventTriggerBehavior>
+      </interactivity:Interaction.Behaviors>
+      <TabView.TabItemTemplate>
+        <DataTemplate>
+          <TabViewItem Header="{Binding Title}" IconSource="{Binding Icon}">
+            <local:WorkPage DataContext="{Binding}" />
+          </TabViewItem>
+        </DataTemplate>
+      </TabView.TabItemTemplate>
+    </TabView>
+  </Grid>
+</Page>

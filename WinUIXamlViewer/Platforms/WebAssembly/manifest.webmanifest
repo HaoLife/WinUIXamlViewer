@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "WinUIXamlViewer",
+  "display": "standalone",
+  "name": "WinUIXamlViewer",
+  "short_name": "WinUIXamlViewer",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
