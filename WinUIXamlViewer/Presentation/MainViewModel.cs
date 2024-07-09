@@ -117,7 +117,15 @@ public partial class MainViewModel : ObservableObject
 
         // Set options for your file picker
         openPicker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
-        openPicker.SuggestedStartLocation = OperatingSystem.IsWindows() ? PickerLocationId.DocumentsLibrary : PickerLocationId.Unspecified;
+
+
+#if DESKTOP
+        openPicker.SuggestedStartLocation = PickerLocationId.Unspecified;
+#else
+
+        openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+#endif
+        //openPicker.SuggestedStartLocation = OperatingSystem.IsWindows() ? PickerLocationId.DocumentsLibrary : PickerLocationId.Unspecified;
         openPicker.FileTypeFilter.Add(".dll");
 
 
